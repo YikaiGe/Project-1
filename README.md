@@ -1,2 +1,3 @@
 # Project-1
-Project 1 for Yuhan Wang and Yikai Ge
+This is the Project 1 for Yuhan Wang and Yikai Ge.
+Reference see the report.

@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import matplotlib
-# matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 df = pd.read_excel(r"C:\Users\46473\OneDrive\Desktop\CSE5104\Project\1\concretecompressivestrength\Concrete_Data.xls")
@@ -44,7 +43,7 @@ def compute_r_squared(X, y, weights, bias):
     r_squared = 1 - (mse / variance)
     return r_squared
 
-def gradient_descent(X, y, learning_rate=0.01, max_iterations=1000000, 
+def gradient_descent(X, y, learning_rate=0.01, max_iterations=100000, 
                      tolerance=1e-9, verbose=False, init_weights=None, init_bias=None):
     n_samples, n_features = X.shape    
     weights = np.zeros(n_features) if init_weights is None else init_weights.copy()
@@ -163,7 +162,7 @@ mv_std_test_r2 = compute_r_squared(X_test_std, y_test, weights_mv_std, bias_mv_s
 # Multivariate Model Set 2 Raw
 
 weights_mv_raw, bias_mv_raw, loss_mv_raw = gradient_descent(
-    X_train_raw, y_train, learning_rate=1e-9, max_iterations=100000, verbose=True
+    X_train_raw, y_train, learning_rate=1e-7, max_iterations=100000, verbose=True
 )
 
 mv_raw_train_mse = compute_mse(X_train_raw, y_train, weights_mv_raw, bias_mv_raw)
@@ -174,19 +173,18 @@ mv_raw_test_r2 = compute_r_squared(X_test_raw, y_test, weights_mv_raw, bias_mv_r
 
 # Plots
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+fig, ax = plt.subplots(1, 1, figsize=(14, 10))
 
 # Plot 1: Multivariate Standardized loss curve
-ax = axes[0, 0]
-ax.plot(loss_mv_std, color='steelblue', linewidth=1)
-ax.set_title('Multivariate Model (Standardized) - Loss Curve', fontweight='bold')
-ax.set_xlabel('Iteration')
-ax.set_ylabel('MSE')
-ax.set_yscale('log')
-ax.grid(True, alpha=0.3)
+# ax.plot(loss_mv_std, color='steelblue', linewidth=1)
+# ax.set_title('Multivariate Model (Standardized) - Loss Curve', fontweight='bold')
+# ax.set_xlabel('Iteration')
+# ax.set_ylabel('MSE')
+# ax.set_yscale('log')
+# ax.grid(True, alpha=0.3)
 
-# Plot 2: Multivariate Raw loss curve
-ax = axes[0, 1]
+# # Plot 2: Multivariate Raw loss curve
+# ax = axes[0, 1]
 ax.plot(loss_mv_raw, color='darkorange', linewidth=1)
 ax.set_title('Multivariate Model (Raw) - Loss Curve', fontweight='bold')
 ax.set_xlabel('Iteration')
@@ -194,30 +192,29 @@ ax.set_ylabel('MSE')
 ax.set_yscale('log')
 ax.grid(True, alpha=0.3)
 
-# Plot 3: Best univariate standardized (Cement)
-ax = axes[1, 0]
-best_uni_std = max(univariate_results_std, key=lambda x: x['train_r2'])
-ax.plot(best_uni_std['loss_history'], color='forestgreen', linewidth=1)
-ax.set_title(f"Univariate (Std) - {best_uni_std['feature']} - Loss Curve", fontweight='bold')
-ax.set_xlabel('Iteration')
-ax.set_ylabel('MSE')
-ax.set_yscale('log')
-ax.grid(True, alpha=0.3)
+# # Plot 3: Best univariate standardized (Cement)
+# ax = axes[1, 0]
+# best_uni_std = max(univariate_results_std, key=lambda x: x['train_r2'])
+# ax.plot(best_uni_std['loss_history'], color='forestgreen', linewidth=1)
+# ax.set_title(f"Univariate (Std) - {best_uni_std['feature']} - Loss Curve", fontweight='bold')
+# ax.set_xlabel('Iteration')
+# ax.set_ylabel('MSE')
+# ax.set_yscale('log')
+# ax.grid(True, alpha=0.3)
 
-# Plot 4: Best univariate raw (Cement)
-ax = axes[1, 1]
-best_uni_raw = max(univariate_results_raw, key=lambda x: x['train_r2'])
-ax.plot(best_uni_raw['loss_history'], color='crimson', linewidth=1)
-ax.set_title(f"Univariate (Raw) - {best_uni_raw['feature']} - Loss Curve", fontweight='bold')
-ax.set_xlabel('Iteration')
-ax.set_ylabel('MSE')
-ax.set_yscale('log')
-ax.grid(True, alpha=0.3)
+# # Plot 4: Best univariate raw (Cement)
+# best_uni_raw = max(univariate_results_raw, key=lambda x: x['train_r2'])
+# ax.plot(best_uni_raw['loss_history'], color='crimson', linewidth=1)
+# ax.set_title(f"Univariate (Raw) - {best_uni_raw['feature']} - Loss Curve", fontweight='bold')
+# ax.set_xlabel('Iteration')
+# ax.set_ylabel('MSE')
+# ax.set_yscale('log')
+# ax.grid(True, alpha=0.3)
 
-plt.suptitle('Gradient Descent Convergence: MSE Loss Over Iterations', 
-             fontsize=14, fontweight='bold', y=1.02)
-plt.tight_layout()
-plt.savefig('loss_curves.png', dpi=150, bbox_inches='tight')
+# plt.suptitle('Gradient Descent Convergence: MSE Loss Over Iterations', 
+#              fontsize=14, fontweight='bold', y=1.02)
+# plt.tight_layout()
+# plt.savefig('loss_curves.png', dpi=150, bbox_inches='tight')
 
 
 
